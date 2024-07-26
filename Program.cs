@@ -15,7 +15,7 @@ IJobDetail job = JobBuilder.Create<SimpleJob>()
 
 ITrigger trigger = TriggerBuilder.Create()
     .WithIdentity("trigger1", "group1")
-    .WithCronSchedule("0 0/1 * ? * * *")
+    .WithCronSchedule("0 0/1 * ? * * *", x => x.InTimeZone(TimeZoneInfo.Utc))
     .StartNow()
     .Build();
 
