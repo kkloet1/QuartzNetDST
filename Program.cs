@@ -13,9 +13,11 @@ IJobDetail job = JobBuilder.Create<SimpleJob>()
         .WithIdentity("job1", "group1")
         .Build();
 
-ITrigger trigger = TriggerBuilder.Create()
+var timeProvider = new TestTimeProvider(DateTimeOffset.UtcNow);
+
+ITrigger trigger = TriggerBuilder.Create(timeProvider)
     .WithIdentity("trigger1", "group1")
-    .WithCronSchedule("0 0/1 * ? * * *", x => x.InTimeZone(TimeZoneInfo.Utc))
+    .WithCronSchedule("0 0/1 2 ? * * *", x => x.InTimeZone(TimeZoneInfo.Local))
     .StartNow()
     .Build();
 
